@@ -1,0 +1,94 @@
+/* DTAK slide theme for reveal.js (1280×720 canvas).
+   Accent: UPC blue #0076CF. Titles (h1, h2): Montserrat Bold. Everything else: Roboto.
+   Dark section slides: navy #0A2A4F. See ../AGENTS.md for the rules. */
+
+@font-face { font-family: "Montserrat"; font-weight: 700; src: url(../node_modules/@fontsource/montserrat/files/montserrat-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Roboto"; font-weight: 400; src: url(../node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Roboto"; font-weight: 400; font-style: italic; src: url(../node_modules/@fontsource/roboto/files/roboto-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "Roboto"; font-weight: 500; src: url(../node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "Roboto"; font-weight: 700; src: url(../node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2) format("woff2"); }
+
+:root {
+  --accent: #0076CF;      /* UPC blue, Pantone 2195 */
+  --navy: #0A2A4F;        /* titles; section slide background */
+  --soft: #66ADE2;        /* soft blue = UPC blue at 60 % over white; the accent on dark backgrounds */
+  --text: #1C2430;
+  --muted: #6B7785;
+  --line: #DDE3EA;
+  --title-font: "Montserrat", "Roboto", Arial, sans-serif;
+  --font: "Roboto", Arial, sans-serif;
+  --mono: ui-monospace, "DejaVu Sans Mono", monospace;
+}
+
+.reveal { font-family: var(--font); font-size: 30px; color: var(--text); }
+.reveal .slides { text-align: left; }
+.reveal .slides section {
+  box-sizing: border-box; width: 100%; height: 100%; top: 0 !important;
+  padding: 56px 64px 110px;
+}
+.reveal .slides > section.stack { padding: 0 !important; }
+
+/* ---- text ---- */
+.reveal h1, .reveal h2 { font-family: var(--title-font); font-weight: 700; color: var(--navy); text-transform: none; letter-spacing: normal; margin: 0 0 32px; line-height: 1.12; }
+.reveal h1 { font-size: 72px; }
+.reveal h2 { font-size: 50px; }
+.reveal h2 small, .reveal .subtitle { display: block; margin-top: 10px; font-family: var(--font); font-size: 26px; font-weight: 500; color: var(--accent); }
+.reveal h3, .reveal h4 { font-family: var(--font); font-weight: 700; color: var(--navy); text-transform: none; margin: 0 0 .4em; }
+.reveal h3 { font-size: 32px; }
+.reveal h4 { font-size: 28px; }
+.reveal p { margin: 0 0 .6em; line-height: 1.35; }
+.reveal ul, .reveal ol { display: block; margin: 0 0 .6em 1em; padding: 0; }
+.reveal li { margin: .15em 0; line-height: 1.35; }
+.reveal li::marker { color: var(--accent); }
+.reveal li li { font-size: .85em; }
+.reveal a { color: var(--accent); }
+.reveal strong, .reveal b { font-weight: 700; }
+.reveal code { font-family: var(--mono); font-size: .85em; color: var(--accent); }
+.reveal .note { font-size: 20px; color: var(--muted); }
+.reveal .small { font-size: 24px; }
+.reveal .hl { color: var(--accent); font-weight: 700; }
+.reveal blockquote { width: auto; margin: 0 0 .6em; padding-left: .8em; border-left: 6px solid var(--accent); background: none; box-shadow: none; font-style: italic; }
+.reveal img { border: 0; box-shadow: none; background: none; margin: 0; max-width: 100%; }
+
+/* ---- layout helpers ---- */
+.cols { display: grid; grid-template-columns: var(--cols, 1fr 1fr); gap: 40px; align-items: start; }
+.reveal .box { border-left: 8px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, white); padding: 18px 24px; }
+.reveal pre { width: auto; margin: 0 0 20px; box-shadow: none; font-size: 22px; line-height: 1.35; }
+.reveal pre code { display: block; padding: 16px 20px; max-height: none; color: var(--text); font-size: 1em;
+  background: color-mix(in srgb, var(--accent) 6%, white); border: 1.5px solid var(--accent); border-radius: 4px; }
+.reveal table { border-collapse: collapse; font-size: 24px; }
+.reveal th { font-weight: 700; color: var(--navy); border-bottom: 2px solid var(--accent); text-align: left; padding: 6px 14px; }
+.reveal td { border-bottom: 1px solid var(--line); padding: 6px 14px; }
+
+/* ---- title slide ---- */
+.reveal .slides section.title { padding-top: 220px; text-align: center; }
+.reveal section.title h1 { margin-bottom: 20px; }
+.reveal section.title .subtitle { font-size: 32px; margin-bottom: 36px; }
+.reveal section.title .author { font-size: 24px; color: var(--muted); }
+
+/* ---- section slides (dark) ---- */
+.reveal .slides section.section { padding-top: 240px; color: #fff; }
+.reveal section.section h1, .reveal section.section h2 { color: #fff; font-size: 70px; }
+.reveal section.section h2 small, .reveal section.section .subtitle { color: var(--soft); font-size: 34px; }
+.reveal section.section a, .reveal section.section .hl, .reveal section.section li::marker { color: var(--soft); }
+
+/* ---- chrome (injected by deck.js): top bar, footer (UPC left · rule · DTAK short right), page number ----
+   UPC identity manual, coexistence on equal footing: UPC mark left, the other mark right, never taller than the
+   UPC symbol. Both SVGs are tight (no padding) with the symbol/icon spanning the full height, so the same CSS
+   height gives equal footing. UPC mark ≥ 160 px wide on screen: 46 px tall → 210 px wide. */
+.chrome { position: absolute; inset: 0; pointer-events: none; }
+.chrome .bar { position: absolute; left: 0; top: 0; width: 100%; height: 12px; background: var(--accent); }
+.chrome .foot { position: absolute; left: 24px; right: 72px; bottom: 18px; height: 46px; display: flex; align-items: center; gap: 28px; }
+.chrome .foot img { height: 46px; width: auto; }
+.chrome .foot .rule { flex: 1; height: 2px; background: var(--accent); }
+.chrome .num { position: absolute; right: 22px; bottom: 32px; font: 16px var(--font); color: var(--muted); }
+.section .chrome .bar { display: none; }
+.section .chrome .rule { background: rgba(255, 255, 255, .5); }
+.section .chrome .num { color: rgba(255, 255, 255, .75); }
+.nochrome .chrome .foot, .nochrome .chrome .bar { display: none; }
+
+/* ---- PDF export (?print-pdf): keep backgrounds, restore padding reveal's print CSS removes ---- */
+html.reveal-print, html.reveal-print * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+html.reveal-print .reveal .slides section:not(.stack) { width: 100% !important; height: 100% !important; padding: 56px 64px 110px !important; }
+html.reveal-print .reveal .slides section.title { padding-top: 220px !important; }
+html.reveal-print .reveal .slides section.section { padding-top: 240px !important; }
