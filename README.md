@@ -93,8 +93,9 @@ Contrast (WCAG AA needs 4.5:1 for body text):
 | Logo tagline | Helvetica Neue Roman | outlined in the SVGs |
 | **First-level titles** (document and slide titles, h1/h2) | **Montserrat Bold** | matches the wordmark |
 | **Everything else** (subtitles, body, tables, captions) | **Roboto** | an official UPC substitute for Helvetica Neue; fallback Arial |
+| Code (`code`, `pre`) | Roboto Mono | the monospace companion of Roboto |
 
-Montserrat and Roboto are free (SIL OFL / Apache 2.0). In the slides they come from `@fontsource/*`.
+Montserrat, Roboto and Roboto Mono are free (SIL OFL / Apache 2.0). In the slides they come from `@fontsource/*`.
 
 ## Regenerating the logo
 

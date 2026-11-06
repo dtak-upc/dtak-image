@@ -18,7 +18,7 @@ A reveal.js template for DTAK presentations. The look is fixed: write content, n
 ## Identity (fixed)
 - **Canvas:** 16:9, 1280×720.
 - **Accent: UPC blue `#0076CF`** (`--accent`), used for subtitles, bullets, links, inline code, callout boxes and the top bar. Dark slides use soft blue `#66ADE2` (`--soft`) instead, because UPC blue is too dark on navy.
-- **Fonts:** **Montserrat Bold for titles** (`h1`, `h2`). **Roboto for everything else**: subtitles (`h2 small`, `.subtitle`), `h3`/`h4`, body, tables. Do not add other fonts.
+- **Fonts:** **Montserrat Bold for titles** (`h1`, `h2`). **Roboto for everything else**: subtitles (`h2 small`, `.subtitle`), `h3`/`h4`, body, tables. **Roboto Mono for code** (`code`, `pre`). Do not add other general-purpose text fonts; a specialised font (e.g. for math or symbols) is fine if a slide really needs it, bundled via `@fontsource/*`.
 - **Colors:** titles navy `#0A2A4F`, body `#1C2430`, muted `#6B7785`. Use only these, the accent and soft blue. Do not invent new colors.
 - **Section slides:** navy background **`#0A2A4F`**, white title, soft-blue subtitle.
 - **Chrome** (added to every slide by `deck.js`; do not add it by hand):
