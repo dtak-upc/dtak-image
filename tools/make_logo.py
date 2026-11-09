@@ -14,6 +14,7 @@ Geometry (all in font units of Montserrat Bold, cap height CAP = 700):
     top and bottom edges, exactly like the UPC mark's file. Same height in a layout = equal footing.
   * DTAK: Montserrat Bold, the font's default kerning (GPOS), the A drawn without its crossbar (open A).
   * tagline: "Data to knowledge" / "Data for knowledge", Helvetica Neue Roman (outlined), "to"/"for" in the accent.
+    Three columns: "Data" and "knowledge" line up on both lines, "to" is centred over "for".
 """
 import json
 import os
@@ -175,29 +176,41 @@ TAG_UPM = TT_TAG['head'].unitsPerEm
 TAG_SIZE = TAG_CAP * CAP * TAG_UPM / TT_TAG['OS/2'].sCapHeight  # font size giving TAG_CAP
 
 
-def line_width(runs, size=TAG_SIZE):
-    return sum(p.x_advance for p in shape(TAGFONT, ''.join(runs))[1]) * size / TAG_UPM
+def line_width(runs):
+    return sum(p.x_advance for p in shape(TAGFONT, ''.join(runs))[1]) * TAG_SIZE / TAG_UPM
 
 
-def tagline(pal, x0, first_baseline, size=TAG_SIZE, align='left', width=0):
+def tag_runs(runs, x0, base, shifts=(0, 0, 0)):
+    """The three runs of a tagline line as paths, pen starting at x0; run i moved right by shifts[i]."""
     gs, order = TT_TAG.getGlyphSet(), TT_TAG.getGlyphOrder()
-    k = size / TAG_UPM
+    k = TAG_SIZE / TAG_UPM
+    ends = [len(runs[0]), len(runs[0]) + len(runs[1])]
+    paths = [pathops.Path() for _ in runs]
+    infos, pos = shape(TAGFONT, ''.join(runs))
+    x = 0
+    for info, gp in zip(infos, pos):
+        i = sum(info.cluster >= e for e in ends)
+        gs[order[info.codepoint]].draw(
+            TransformPen(paths[i].getPen(), (k, 0, 0, -k, x0 + shifts[i] + (x + gp.x_offset) * k, base)))
+        x += gp.x_advance
+    for p in paths:
+        p.simplify()
+    return paths
+
+
+def tagline(pal, x0, first_baseline):
+    """Two lines in three columns: "Data" and "knowledge" are set at the same x on both lines; the accent words
+    sit between them, the narrower one ink-centred on the wider one. The wider line keeps its natural spacing."""
+    bases = [first_baseline + n * TAG_LEAD * CAP for n in range(len(LINES))]
+    plain = [tag_runs(runs, x0, b) for runs, b in zip(LINES, bases)]
+    ref = max(range(len(LINES)), key=lambda n: plain[n][2].bounds[0])  # the line whose "knowledge" starts last
+    centre = lambda p: (p.bounds[0] + p.bounds[2]) / 2
     out = ['<g id="tagline">']
-    for n, runs in enumerate(LINES):
-        a0, a1 = len(runs[0]), len(runs[0]) + len(runs[1])
-        infos, pos = shape(TAGFONT, ''.join(runs))
-        lx = x0 + ((width - line_width(runs, size)) / 2 if align == 'center' else 0)
-        base = first_baseline + n * TAG_LEAD * CAP * size / TAG_SIZE
-        paths = {'text': pathops.Path(), 'accent': pathops.Path()}
-        x = 0
-        for info, gp in zip(infos, pos):
-            tgt = paths['accent' if a0 <= info.cluster < a1 else 'text']
-            gs[order[info.codepoint]].draw(TransformPen(tgt.getPen(), (k, 0, 0, -k, lx + (x + gp.x_offset) * k, base)))
-            x += gp.x_advance
-        for p in paths.values():
-            p.simplify()
-        out += [f'  <path fill="{pal["text"]}" d="{path_d(paths["text"])}"/>',
-                f'  <path id="{runs[1]}" fill="{pal["accent"]}" d="{path_d(paths["accent"])}"/>']
+    for n, (runs, b) in enumerate(zip(LINES, bases)):
+        shifts = (0, centre(plain[ref][1]) - centre(plain[n][1]), plain[ref][2].bounds[0] - plain[n][2].bounds[0])
+        paths = tag_runs(runs, x0, b, shifts)
+        out += [f'  <path fill="{pal["text"]}" d="{path_d(paths[0])} {path_d(paths[2])}"/>',
+                f'  <path id="{runs[1]}" fill="{pal["accent"]}" d="{path_d(paths[1])}"/>']
     return '\n'.join(out + ['</g>'])
 
 

@@ -36,7 +36,7 @@ Each logo except `dtak_box` comes in two versions: plain for light backgrounds a
 
 - **Wordmark:** "DTAK" in **Montserrat Bold** with the font's **default kerning**. The **A has no crossbar** (an open Λ) and is the only letter in the accent color: it reads as an arrow or peak, from data up to knowledge.
 - **Icon:** a small graph, with data points connected into knowledge. There are three node sizes and three node colors: 3 navy, 2 UPC blue and 2 soft blue.
-- **Tagline:** "Data *to* knowledge / Data *for* knowledge", set in **Helvetica Neue Roman**, the UPC corporate font. Only *to* and *for* use the accent. The tagline is centred vertically on DTAK's cap height, and a thin vertical divider, as tall as the cap height, separates it from DTAK.
+- **Tagline:** "Data *to* knowledge / Data *for* knowledge", set in **Helvetica Neue Roman**, the UPC corporate font. Only *to* and *for* use the accent. The two lines form three columns: "Data" and "knowledge" line up exactly on both lines, and *to* is centred over *for*. The tagline is centred vertically on DTAK's cap height, and a thin vertical divider, as tall as the cap height, separates it from DTAK.
 - **Proportions,** all relative to the DTAK cap height (CAP):
 
   | | |
