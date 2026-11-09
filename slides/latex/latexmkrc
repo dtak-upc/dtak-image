@@ -1,0 +1,5 @@
+# latexmk (or `latexmk main.tex`): LuaLaTeX, build files in build/, the PDF in pdf/.
+@default_files = ('main.tex');
+$pdf_mode = 4;            # 4 = lualatex; 1 = pdflatex and 5 = xelatex also work
+$aux_dir = 'build';
+$out_dir = 'pdf';

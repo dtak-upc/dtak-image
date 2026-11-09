@@ -1,0 +1,302 @@
+% DTAK Beamer theme. The LaTeX twin of ../revealjs/ (same canvas, colors, fonts, chrome); see AGENTS.md.
+%
+%   \documentclass[aspectratio=169]{beamer}
+%   \usetheme{dtak}                 % options: nosectionframes, logodir=<dir/>
+%
+% Frame options added by the theme:
+%   \begin{frame}[dark]             navy slide (white title, soft-blue subtitle, negative logos); = reveal's .section
+%   \begin{frame}[nochrome]         no top bar and no footer logos (page number stays), e.g. full-bleed images
+% Every \section{...} gets a dark section frame automatically (option nosectionframes turns that off).
+%
+% Geometry is the reveal.js one scaled to Beamer's 160 x 90 mm: 1280 px = 160 mm, so 1 px = 0.125 mm.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemedtak}[2026/11/09 DTAK Beamer theme]
+
+\newif\ifdtak@sectionframes \dtak@sectionframestrue
+\def\dtak@logodir{logos/}
+\DeclareOptionBeamer{nosectionframes}{\dtak@sectionframesfalse}
+\DeclareOptionBeamer{logodir}{\def\dtak@logodir{#1}}
+\ProcessOptionsBeamer
+
+\RequirePackage{iftex}
+\RequirePackage{etoolbox}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{colortbl}
+\RequirePackage{listings}
+\RequirePackage[most]{tcolorbox}
+
+\ifdim\paperwidth<159mm
+  \PackageWarningNoLine{beamerthemedtak}{The DTAK template is 16:9. Use \string\documentclass[aspectratio=169]{beamer}}
+\fi
+
+% ---------------------------------------------------------------- colors (fixed; do not add others)
+\definecolor{dtakaccent}{HTML}{0076CF}  % UPC blue, Pantone 2195
+\definecolor{dtaknavy}{HTML}{0A2A4F}    % titles; dark slide background
+\definecolor{dtaksoft}{HTML}{66ADE2}    % UPC blue at 60 % over white; the accent on dark backgrounds
+\definecolor{dtaktext}{HTML}{1C2430}
+\definecolor{dtakmuted}{HTML}{6B7785}
+\definecolor{dtakline}{HTML}{DDE3EA}
+% Light (default) and dark color sets. Beamer colors are global, so every frame starts from \dtak@setlight
+% (hooked into the frame start below) and the frame option [dark] switches to \dtak@setdark.
+\newif\ifdtak@dark
+\newif\ifdtak@chrome
+\def\dtak@setlight{%
+  \dtak@darkfalse\dtak@chrometrue
+  \setbeamercolor{normal text}{fg=dtaktext,bg=white}%
+  \setbeamercolor{background canvas}{bg=white}%
+  \setbeamercolor{structure}{fg=dtakaccent}%
+  \setbeamercolor{alerted text}{fg=dtakaccent}%
+  \setbeamercolor{example text}{fg=dtakaccent}%
+  \setbeamercolor{title}{fg=dtaknavy}%
+  \setbeamercolor{subtitle}{fg=dtakaccent}%
+  \setbeamercolor{author}{fg=dtakmuted}%
+  \setbeamercolor{institute}{fg=dtakmuted}%
+  \setbeamercolor{date}{fg=dtakmuted}%
+  \setbeamercolor{frametitle}{fg=dtaknavy}%
+  \setbeamercolor{framesubtitle}{fg=dtakaccent}%
+  \setbeamercolor{heading}{fg=dtaknavy}%
+  \setbeamercolor{block title}{fg=dtaknavy}%
+  \setbeamercolor{block title alerted}{fg=dtakaccent}%
+  \setbeamercolor{block title example}{fg=dtaknavy}%
+  \setbeamercolor{block body}{fg=dtaktext}%
+  \setbeamercolor{page number in head/foot}{fg=dtakmuted}%
+  \setbeamercolor{footnote mark}{fg=dtakaccent}%
+  \setbeamercolor{bibliography entry author}{fg=dtaktext}%
+  \setbeamercolor{bibliography entry title}{fg=dtaktext}%
+  \setbeamercolor{bibliography entry location}{fg=dtakmuted}%
+  \setbeamercolor{bibliography entry note}{fg=dtakmuted}%
+  \colorlet{dtak@accent}{dtakaccent}%
+  \colorlet{dtak@rule}{dtakaccent}%
+  \colorlet{dtak@boxbg}{dtakaccent!8!white}%
+  \colorlet{dtak@codebg}{dtakaccent!6!white}%
+  \colorlet{dtak@tablerule}{dtakline}%
+}
+\def\dtak@setdark{%
+  \dtak@darktrue
+  \setbeamercolor{normal text}{fg=white,bg=dtaknavy}%
+  \setbeamercolor{background canvas}{bg=dtaknavy}%
+  \setbeamercolor{structure}{fg=dtaksoft}%
+  \setbeamercolor{alerted text}{fg=dtaksoft}%
+  \setbeamercolor{example text}{fg=dtaksoft}%
+  \setbeamercolor{title}{fg=white}%
+  \setbeamercolor{subtitle}{fg=dtaksoft}%
+  \setbeamercolor{author}{fg=white}%
+  \setbeamercolor{institute}{fg=white}%
+  \setbeamercolor{date}{fg=white}%
+  \setbeamercolor{frametitle}{fg=white}%
+  \setbeamercolor{framesubtitle}{fg=dtaksoft}%
+  \setbeamercolor{heading}{fg=white}%
+  \setbeamercolor{block title}{fg=white}%
+  \setbeamercolor{block title alerted}{fg=dtaksoft}%
+  \setbeamercolor{block title example}{fg=white}%
+  \setbeamercolor{block body}{fg=white}%
+  \setbeamercolor{page number in head/foot}{fg=white!75!dtaknavy}%
+  \setbeamercolor{footnote mark}{fg=dtaksoft}%
+  \setbeamercolor{bibliography entry author}{fg=white}%
+  \setbeamercolor{bibliography entry title}{fg=white}%
+  \setbeamercolor{bibliography entry location}{fg=white!75!dtaknavy}%
+  \setbeamercolor{bibliography entry note}{fg=white!75!dtaknavy}%
+  \colorlet{dtak@accent}{dtaksoft}%
+  \colorlet{dtak@rule}{white!50!dtaknavy}%
+  \colorlet{dtak@boxbg}{dtaksoft!15!dtaknavy}%
+  \colorlet{dtak@codebg}{dtaksoft!10!dtaknavy}%
+  \colorlet{dtak@tablerule}{white!50!dtaknavy}%
+}
+\dtak@setlight
+\pretocmd\beamer@@@@frame{\dtak@setlight\usebeamercolor[fg]{normal text}}{}{\PackageError{beamerthemedtak}{Cannot hook into the Beamer frame start}{}}
+\define@key{beamerframe}{dark}[true]{\dtak@setdark\usebeamercolor[fg]{normal text}}
+\define@key{beamerframe}{nochrome}[true]{\dtak@chromefalse}
+
+% Links in the accent (urls, \href); internal links (\ref, \cite, navigation) keep the text color.
+\hypersetup{colorlinks=true, linkcolor=., citecolor=., filecolor=dtak@accent, urlcolor=dtak@accent}
+
+% ---------------------------------------------------------------- fonts
+% Titles (title, frame titles, section frames): Montserrat Bold. Everything else: Roboto. Code: Roboto Mono.
+% All three ship with TeX Live / MiKTeX / Overleaf; pdfLaTeX, LuaLaTeX and XeLaTeX all work.
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[sfdefault]{roboto}
+  \RequirePackage{roboto-mono}
+  \def\dtak@titlefont{\fontencoding{T1}\fontfamily{Montserrat-LF}\fontseries{b}\fontshape{n}\selectfont}
+  \def\dtak@mediumfont{\sffamily\fontseries{medium}\selectfont}
+  \pdfsuppresswarningpagegroup=1  % the logo PDFs carry page groups; harmless
+\else
+  \RequirePackage[sfdefault]{roboto}
+  \RequirePackage{roboto-mono}
+  \newfontfamily\dtak@titlefont{Montserrat-Bold.otf}[Ligatures=TeX]
+  \newfontfamily\dtak@mediumfont{Roboto}[Extension=.otf, UprightFont=*-Medium, ItalicFont=*-MediumItalic,
+    BoldFont=*-Bold, BoldItalicFont=*-BoldItalic, Ligatures=TeX]
+\fi
+% Math: Beamer's default (sans-serif Computer Modern). \usefonttheme[onlymath]{serif} in the deck if you prefer serif.
+
+% Sizes: reveal px × 0.3557 pt (body 30 px ≈ 11 pt, the Beamer default).
+\setbeamerfont{title}{family=\dtak@titlefont, size=\fontsize{25.6}{28.7}}               % h1, 72 px
+\setbeamerfont{subtitle}{family=\dtak@mediumfont, size=\fontsize{11.4}{14}}             % 32 px
+\setbeamerfont{author}{size=\fontsize{8.5}{11}}                                        % 24 px
+\setbeamerfont{institute}{size=\fontsize{8.5}{11}}
+\setbeamerfont{date}{size=\fontsize{8.5}{11}}
+\setbeamerfont{frametitle}{family=\dtak@titlefont, size=\fontsize{17.8}{19.9}}          % h2, 50 px
+\setbeamerfont{framesubtitle}{family=\dtak@mediumfont, size=\fontsize{9.25}{11.5}}      % h2 small, 26 px
+\setbeamerfont{section title}{family=\dtak@titlefont, size=\fontsize{24.9}{27.9}}       % dark h2, 70 px
+\setbeamerfont{section subtitle}{family=\dtak@mediumfont, size=\fontsize{12.1}{15}}     % 34 px
+\setbeamerfont{heading}{series=\bfseries, size=\fontsize{11.4}{14}}                     % h3, 32 px
+\setbeamerfont{block title}{series=\bfseries, size=\normalsize}
+\setbeamerfont{page number in head/foot}{size=\fontsize{5.7}{7}}                        % 16 px
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\footnotesize}
+\setbeamerfont{quote}{shape=\itshape}
+\setbeamerfont{quotation}{shape=\itshape}
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{footnote}{size=\scriptsize}
+
+% ---------------------------------------------------------------- layout
+\beamer@centeredfalse                       % content starts at the top, like reveal (frame option [c] still works)
+\setbeamersize{text margin left=8mm, text margin right=8mm}   % 64 px
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{sections/subsections in toc}[default]
+\setbeamertemplate{caption}[numbered]
+
+% Top accent bar, 12 px, light frames with chrome only. Its height is always reserved so all frames align.
+\setbeamertemplate{headline}{%
+  \hbox to\paperwidth{%
+    \ifdtak@chrome\ifdtak@dark\else\color{dtakaccent}\vrule width\paperwidth height 1.5mm depth 0pt\fi\fi
+    \vrule width 0pt height 1.5mm\hss}%
+}
+
+% Frame title (h2) + optional subtitle (h2 small). Top padding 56 px; 32 px below. Dark frames: 240 px, bigger.
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \ifdtak@dark\vskip 26.5mm\else\vskip 6.2mm\fi
+  \begin{beamercolorbox}[wd=\paperwidth, leftskip=8mm, rightskip=8mm plus 1fil]{frametitle}%
+    \ifdtak@dark\usebeamerfont{section title}\else\usebeamerfont{frametitle}\fi
+    \insertframetitle\par
+    \ifx\insertframesubtitle\@empty\else
+      \vskip\ifdtak@dark 1.6mm\else 1.45mm\fi
+      {\ifdtak@dark\usebeamerfont{section subtitle}\else\usebeamerfont{framesubtitle}\fi
+       \usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+    \fi
+  \end{beamercolorbox}%
+  \vskip 0mm
+}
+\setbeamertemplate{frametitle continuation}{}
+
+% Footer: UPC mark left · thin rule · DTAK logo right, both 46 px (5.75 mm) tall = equal footing (UPC identity
+% manual: UPC on the left, the other mark on the right, never taller than the UPC symbol). The logo files are
+% tight (no padding), so giving both the same height is all it takes. 46 px tall makes the UPC mark 210 px wide
+% (the manual's on-screen minimum is 160 px).
+% Page number bottom right. The bottom 110 px (13.75 mm) belong to the footer.
+\newbox\dtak@upcbox \newbox\dtak@dtakbox \newdimen\dtak@rulewd
+\setbeamertemplate{footline}{%
+  \vbox to 13.75mm{\vfil
+    \hbox to\paperwidth{%
+      \ifdtak@chrome
+        \setbox\dtak@upcbox\hbox{\includegraphics[height=5.75mm]{\dtak@logodir upc-barcelonatech\ifdtak@dark -neg\fi.pdf}}%
+        \setbox\dtak@dtakbox\hbox{\includegraphics[height=5.75mm]{\dtak@logodir dtak\ifdtak@dark -neg\fi.pdf}}%
+        \dtak@rulewd=\dimexpr\paperwidth-3mm-3.5mm-3.5mm-9mm-\wd\dtak@upcbox-\wd\dtak@dtakbox\relax
+        \hskip 3mm\box\dtak@upcbox
+        \hskip 3.5mm{\color{dtak@rule}\raise 2.75mm\hbox{\vrule width\dtak@rulewd height 0.25mm depth 0pt}}%
+        \hskip 3.5mm\box\dtak@dtakbox
+      \fi
+      \hfil
+      \llap{\raise 2.2mm\hbox{\usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}%
+        \insertframenumber}\hskip 2.75mm}%
+    }%
+    \vskip 2.25mm}%
+}
+
+% Title page (h1, subtitle, "author · institute · date"), centred, 220 px from the top.
+\def\dtak@sep{\hbox{} \textperiodcentered{} }
+\newif\ifdtak@any
+\def\dtak@field#1{%
+  \setbox0\hbox{#1}\ifdim\wd0>0pt \ifdtak@any\dtak@sep\fi #1\dtak@anytrue\fi}
+\setbeamertemplate{title page}{%
+  \vbox{}\vskip 17.4mm
+  \begin{center}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+    \ifx\insertsubtitle\@empty\else
+      \vskip 3.5mm
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \fi
+    \vskip 5mm
+    {\usebeamerfont{author}\usebeamercolor[fg]{author}\dtak@anyfalse
+     \dtak@field{\insertauthor}\dtak@field{\insertinstitute}\dtak@field{\insertdate}\par}%
+  \end{center}
+}
+
+% Every \section starts with a dark section frame, numbered like any other.
+\ifdtak@sectionframes
+  \AtBeginSection{\begin{frame}[dark]\frametitle{\insertsectionhead}\end{frame}}
+\fi
+
+% ---------------------------------------------------------------- content
+% Bullets in the accent: disc, then circle (like the browser's ul / ul ul).
+\setlength\leftmargini{3.75mm}   % 1em of 30 px
+\setlength\leftmarginii{3.75mm}
+\setlength\leftmarginiii{3.75mm}
+% Drawn with PGF (not a font glyph), so they look the same with every engine and font.
+\def\dtak@disc#1{\raise\dimexpr.26em-#1\relax\hbox{\pgfpicture{0pt}{0pt}{2*#1}{2*#1}%
+  \pgfpathcircle{\pgfpoint{#1}{#1}}{#1}\pgfusepath{fill}\endpgfpicture}}
+\def\dtak@ring#1{\raise\dimexpr.26em-#1\relax\hbox{\pgfpicture{0pt}{0pt}{2*#1}{2*#1}\pgfsetlinewidth{.07em}%
+  \pgfpathcircle{\pgfpoint{#1}{#1}}{#1-.035em}\pgfusepath{stroke}\endpgfpicture}}
+\setbeamertemplate{itemize item}{\dtak@disc{.16em}}
+\setbeamertemplate{itemize subitem}{\dtak@ring{.16em}}
+\setbeamertemplate{itemize subsubitem}{\dtak@disc{.12em}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setbeamertemplate{enumerate subsubitem}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+\setbeamertemplate{description item}{\usebeamercolor[fg]{heading}\bfseries\insertdescriptionitem}
+
+% \heading{...}: a column / paragraph heading (reveal's h3). Use \frametitle for the slide title.
+\providecommand\heading[1]{{\usebeamerfont{heading}\usebeamercolor[fg]{heading}#1\par}\smallskip}
+% \code{...}: inline code, Roboto Mono in the accent.
+\providecommand\code[1]{{\ttfamily\color{dtak@accent}#1}}
+% \muted{...}: secondary text (reveal's .note).
+\providecommand\muted[1]{{\color{dtakmuted}#1}}
+
+% Blocks (block, alertblock, exampleblock) = reveal's .box callout: 8 px accent bar on the left, light tint.
+% A block with an empty title, \begin{block}{} ... \end{block}, is a plain callout.
+\tcbset{dtak box/.style={enhanced, sharp corners, frame hidden, boxrule=0pt, colback=dtak@boxbg,
+  borderline west={1mm}{0mm}{dtak@accent}, left=4mm, right=3mm, top=2.25mm, bottom=2.25mm, boxsep=0pt,
+  before skip=2mm, after skip=2mm, fontupper=\usebeamercolor[fg]{block body}}}
+\def\dtak@blockbegin#1{%
+  \begin{tcolorbox}[dtak box]%
+  \ifx\insertblocktitle\@empty\else
+    {\usebeamerfont*{block title}\usebeamercolor[fg]{#1}\insertblocktitle\par}\smallskip
+  \fi}
+\setbeamertemplate{block begin}{\dtak@blockbegin{block title}}
+\setbeamertemplate{block end}{\end{tcolorbox}}
+\setbeamertemplate{block alerted begin}{\dtak@blockbegin{block title alerted}}
+\setbeamertemplate{block alerted end}{\end{tcolorbox}}
+\setbeamertemplate{block example begin}{\dtak@blockbegin{block title example}}
+\setbeamertemplate{block example end}{\end{tcolorbox}}
+
+% quote / quotation = reveal's blockquote: 6 px accent bar on the left, italic, no background.
+\tcbset{dtak quote/.style={enhanced, sharp corners, frame hidden, boxrule=0pt, opacityback=0,
+  borderline west={0.75mm}{0mm}{dtak@accent}, left=3.5mm, right=0mm, top=0.5mm, bottom=0.5mm, boxsep=0pt,
+  before skip=3mm, after skip=2mm, fontupper=\itshape}}
+\renewenvironment<>{quote}{\begin{actionenv}#1\begin{tcolorbox}[dtak quote]}{\end{tcolorbox}\end{actionenv}}
+\renewenvironment<>{quotation}{\begin{actionenv}#1\begin{tcolorbox}[dtak quote]}{\end{tcolorbox}\end{actionenv}}
+
+% Code (lstlisting; frames with code need [fragile]): Roboto Mono 22 px, tinted box with an accent border.
+\lstdefinestyle{dtak}{
+  basicstyle=\ttfamily\fontsize{7.8}{10.5}\selectfont, columns=fullflexible, keepspaces=true, upquote=true,
+  showstringspaces=false, breaklines=true, tabsize=4,
+  frame=single, framerule=0.2mm, rulecolor=\color{dtak@accent}, framesep=2mm, xleftmargin=2.2mm,
+  xrightmargin=2.2mm, framexleftmargin=0mm, backgroundcolor=\color{dtak@codebg},
+  keywordstyle=\bfseries, commentstyle=\color{dtakmuted}\itshape, stringstyle=, numberstyle=\tiny\color{dtakmuted},
+  aboveskip=1mm, belowskip=2mm}
+\lstset{style=dtak}
+
+% Tables with booktabs: thin light rules, the header rule (\midrule) in the accent, like the reveal tables.
+\setlength\heavyrulewidth{0.125mm}
+\setlength\lightrulewidth{0.25mm}
+\setlength\cmidrulewidth{0.125mm}
+\let\dtak@toprule\toprule \def\toprule{\arrayrulecolor{dtak@tablerule}\dtak@toprule}
+\let\dtak@bottomrule\bottomrule \def\bottomrule{\arrayrulecolor{dtak@tablerule}\dtak@bottomrule}
+\let\dtak@cmidrule\cmidrule \def\cmidrule{\arrayrulecolor{dtak@tablerule}\dtak@cmidrule}
+\let\dtak@midrule\midrule \def\midrule{\arrayrulecolor{dtak@accent}\dtak@midrule}
+\arrayrulecolor{dtakline}
+\setlength\tabcolsep{1.75mm}
+

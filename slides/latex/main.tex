@@ -1,0 +1,72 @@
+% DTAK slide template (Beamer). Copy this folder, then replace the frames. See AGENTS.md.
+%   latexmk main.tex        (LuaLaTeX by default, see latexmkrc; pdfLaTeX and XeLaTeX also work)
+\documentclass[aspectratio=169]{beamer}
+\usetheme{dtak}
+
+\title{4. Lorem ipsum}
+\subtitle{Sit amet, consectetur adipiscing elit}
+\author{Name Surname}
+\institute{Event}
+\date{2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Lorem ipsum}  % a dark section frame is added automatically
+
+\begin{frame}{Content slide}{An optional subtitle in the accent}
+  \begin{itemize}
+    \item Lorem ipsum dolor sit amet, \alert{consectetur} adipiscing elit
+    \item Sed do eiusmod tempor incididunt ut labore
+      \begin{itemize}
+        \item Ut enim ad minim veniam, quis nostrud
+      \end{itemize}
+    \item Duis aute irure dolor in \href{https://dtak.upc.edu}{reprehenderit}
+  \end{itemize}
+  \begin{block}{}
+    A callout: excepteur sint occaecat cupidatat non proident.
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Two columns}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \heading{Left}
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+      \begin{quote}
+        Quote: ut enim ad minim veniam.
+      \end{quote}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \heading{Right}
+\begin{lstlisting}[language=Python]
+def hello():
+    return "data to knowledge"
+\end{lstlisting}
+      \begin{tabular}{ll}
+        \toprule
+        Item  & Value \\
+        \midrule
+        Lorem & 42 \\
+        Ipsum & 7 \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Beamer as usual}{Overlays, blocks, math}
+  \begin{itemize}[<+->]
+    \item Overlays work: \code{\textbackslash pause}, \code{<2->}, \code{\textbackslash only}
+    \item Math: $\mathbb{E}[X] = \sum_i x_i \, p(x_i)$
+  \end{itemize}
+  \begin{block}{A titled block}
+    \code{block}, \code{alertblock} and \code{exampleblock} all use the callout style.
+  \end{block}
+\end{frame}
+
+\begin{frame}[dark]{Thank you}{name@upc.edu}
+\end{frame}
+
+\end{document}

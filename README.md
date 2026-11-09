@@ -10,11 +10,12 @@ This folder is the single source of truth for the DTAK logo and slides. Every fi
 
 ```
 dtak-image/
-├── logo/                  generated: SVG (master) + png/ renders
+├── logo/                  generated: SVG (master) + png/ renders + pdf/ (vector, for LaTeX)
 ├── tools/make_logo.py     the logo generator (geometry, colors, fonts)
 ├── tools/requirements.txt
 ├── fonts/                 Montserrat Bold (SIL OFL, bundled) + licence
-└── slides/revealjs/       slide template (see its AGENTS.md); theme/logos/dtak{,-neg}.svg are symlinks to logo/dtak_short{,_dark}.svg
+├── slides/revealjs/       slide template (see its AGENTS.md); theme/logos/dtak{,-neg}.svg are symlinks to logo/dtak_short{,_dark}.svg
+└── slides/latex/          the same template for Beamer (see its AGENTS.md); logos/dtak{,-neg}.pdf are symlinks to logo/pdf/dtak_short{,_dark}.pdf
 ```
 
 ## The logo
@@ -30,7 +31,7 @@ It is a network icon (7 nodes, 9 edges), followed by **DTAK** and a two-line tag
 | `dtak_short` | icon · DTAK | small sizes, slide footers, next to other marks in tight spaces |
 | `dtak_box` | white icon on a UPC-blue square | avatar, favicon, social media, stickers |
 
-Each logo except `dtak_box` comes in two versions: plain for light backgrounds and `_dark` for dark ones. All SVGs have a transparent background, except `dtak_box`, which has its own blue square, and all text is converted to outlines, so they display without any fonts installed. PNG renders are in `logo/png/`: 512 px tall for long and short, 1024 px for the box.
+Each logo except `dtak_box` comes in two versions: plain for light backgrounds and `_dark` for dark ones. All SVGs have a transparent background, except `dtak_box`, which has its own blue square, and all text is converted to outlines, so they display without any fonts installed. PNG renders are in `logo/png/`: 512 px tall for long and short, 1024 px for the box. Vector PDFs, the same size as the SVGs, are in `logo/pdf/`, for LaTeX, which cannot include SVG.
 
 ### Design decisions
 
@@ -112,3 +113,5 @@ python3 -m venv .venv && .venv/bin/pip install -r tools/requirements.txt
 ## Slides
 
 `slides/revealjs/` is a reveal.js template that applies this identity. Its accent is UPC blue, titles are in Montserrat, body text is in Roboto, and section slides are navy. The footer shows the UPC mark on the left and `dtak_short` on the right. See `slides/revealjs/AGENTS.md`.
+
+`slides/latex/` is the same template as a Beamer theme (`\usetheme{dtak}`). It has the same canvas, colors, fonts, footer and slide types, and everything else is plain Beamer. It builds with pdfLaTeX, LuaLaTeX or XeLaTeX and needs only a standard TeX distribution. See `slides/latex/AGENTS.md`.

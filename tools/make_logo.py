@@ -2,7 +2,8 @@
 
     python3 -I tools/make_logo.py logo        (run from dtak-image/; needs tools/requirements.txt)
 
-Writes, as SVG (all text outlined, no fonts needed to display) plus PNG renders in logo/png/:
+Writes, as SVG (all text outlined, no fonts needed to display) plus PNG renders in logo/png/ and vector PDFs in
+logo/pdf/ (for LaTeX; reproducible: fixed creation date):
   dtak_long[_dark]      icon · DTAK | two-line tagline     main logo
   dtak_short[_dark]     icon · DTAK                        compact logo (slides footer, small sizes)
   dtak_box              white icon on a UPC-blue square     avatar, favicon, social media
@@ -273,9 +274,29 @@ def export_png(out, names):
     return sizes
 
 
+def export_pdf(out, names):
+    """Vector PDF copies of the SVGs (for LaTeX/Beamer, which cannot include SVG). Page size = SVG size (px → pt
+    at 96 dpi), no padding, like the SVGs. The creation date is pinned so regenerating gives identical bytes."""
+    import cairocffi
+    from cairosvg.surface import PDFSurface
+
+    class _Surface(PDFSurface):
+        def _create_surface(self, width, height):
+            s, w, h = super()._create_surface(width, height)
+            s.set_metadata(cairocffi.PDF_METADATA_CREATE_DATE, '2026-11-06T00:00:00')
+            s.set_metadata(cairocffi.PDF_METADATA_CREATOR, 'dtak-image/tools/make_logo.py')
+            return s, w, h
+
+    pdf = out / 'pdf'
+    pdf.mkdir(exist_ok=True)
+    for name in names:
+        _Surface.convert(url=str(out / f'{name}.svg'), write_to=str(pdf / f'{name}.pdf'))
+
+
 if __name__ == '__main__':
     out = Path(sys.argv[1] if len(sys.argv) > 1 else HERE / 'logo')
     names = build(out)
     sizes = export_png(out, names)
+    export_pdf(out, names)
     for n in names:
-        print(f'{n:20} {sizes[n][0]}x{sizes[n][1]} png')
+        print(f'{n:20} {sizes[n][0]}x{sizes[n][1]} png, pdf')
