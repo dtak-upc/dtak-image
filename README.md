@@ -15,7 +15,8 @@ dtak-image/
 ├── tools/requirements.txt
 ├── fonts/                 Montserrat Bold (SIL OFL, bundled) + licence
 ├── slides/revealjs/       slide template (see its AGENTS.md); theme/logos/dtak{,-neg}.svg are symlinks to logo/dtak_short{,_dark}.svg
-└── slides/latex/          the same template for Beamer (see its AGENTS.md); logos/dtak{,-neg}.pdf are symlinks to logo/pdf/dtak_short{,_dark}.pdf
+├── slides/latex/          the same template for Beamer (see its AGENTS.md); logos/dtak{,-neg}.pdf are symlinks to logo/pdf/dtak_short{,_dark}.pdf
+└── documents/latex/       A4 two-sided LaTeX class for articles and exams (see its AGENTS.md); logos/ are symlinks to logo/pdf/dtak_long.pdf and the UPC mark
 ```
 
 ## The logo
@@ -115,3 +116,7 @@ python3 -m venv .venv && .venv/bin/pip install -r tools/requirements.txt
 `slides/revealjs/` is a reveal.js template that applies this identity. Its accent is UPC blue, titles are in Montserrat, body text is in Roboto, and section slides are navy. The footer shows the UPC mark on the left and `dtak_short` on the right. See `slides/revealjs/AGENTS.md`.
 
 `slides/latex/` is the same template as a Beamer theme (`\usetheme{dtak}`). It has the same canvas, colors, fonts, footer and slide types, and everything else is plain Beamer. It builds with pdfLaTeX, LuaLaTeX or XeLaTeX and needs only a standard TeX distribution. See `slides/latex/AGENTS.md`.
+
+## Documents
+
+`documents/latex/` is a LaTeX class for printable documents, `dtakdoc.cls`: A4, two-sided, with both marks on page 1 (UPC left, DTAK right, 10 mm tall), then the UPC mark at the outer top of even pages and `dtak_long` at the outer top of odd pages, a thin navy rule under the header, and the page number at the outer bottom. The body keeps LaTeX's default font; only the title and section headings are Montserrat Bold in navy. The document type is a class option, `\documentclass{dtakdoc}` (article) or `\documentclass[exam]{dtakdoc}` (built on `exam.cls`), with `article.tex` and `exam.tex` as examples. See `documents/latex/AGENTS.md`.

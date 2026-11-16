@@ -1,0 +1,68 @@
+% DTAK article template (A4, two-sided). Copy this folder, then replace the content. See AGENTS.md.
+%   latexmk article.tex     (LuaLaTeX by default, see latexmkrc; pdfLaTeX and XeLaTeX also work)
+\documentclass{dtakdoc}   % [exam] turns it into an exam; see exam.tex
+\usepackage{amsmath,amssymb}
+
+\title{Lorem ipsum dolor sit amet}
+\subtitle{Consectetur adipiscing elit}
+\author{Name Surname}
+\date{November 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat.
+\end{abstract}
+
+\section{Introduction}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
+dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. See
+Section~\ref{sec:method} and \href{https://dtak.upc.edu}{the DTAK site}.
+
+\subsection{Background}
+
+Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti
+sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero:
+\begin{equation}
+  \mathbb{E}[X] = \sum_i x_i \, p(x_i).
+\end{equation}
+
+\section{Method}\label{sec:method}
+
+\begin{table}[ht]
+  \centering
+  \caption{A table with booktabs.}
+  \begin{tabular}{lr}
+    \toprule
+    Item  & Value \\
+    \midrule
+    Lorem & 42 \\
+    Ipsum & 7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Lorem}
+\subsubsection{Ipsum}
+
+% Filler text to reach a few pages (odd and even headers); delete it.
+\newcount\filler \filler=0
+\loop
+  Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor.
+  Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus,
+  iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum.
+  Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit.
+
+  \advance\filler 1
+\ifnum\filler<14 \repeat
+
+\section{Conclusions}
+
+Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante.
+
+\end{document}

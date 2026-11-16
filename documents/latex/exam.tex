@@ -1,0 +1,65 @@
+% DTAK exam template (A4, two-sided). Copy this folder, then replace the questions. See AGENTS.md.
+%   latexmk exam.tex        (LuaLaTeX by default, see latexmkrc; pdfLaTeX and XeLaTeX also work)
+% Add `answers` to print the solutions: \documentclass[exam,answers]{dtakdoc}
+\documentclass[exam,addpoints]{dtakdoc}
+\usepackage{amsmath,amssymb}
+
+\course{Course name · Degree}
+\title{Final exam}
+\date{November 2026}
+\duration{2 hours}
+
+\begin{document}
+
+\maketitle
+
+\section*{Instructions}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Answer every question in the space provided.
+This exam has \numquestions\ questions, for a total of \numpoints\ points.
+
+\begin{center}
+  \gradetable[h][questions]
+\end{center}
+
+\section*{Questions}
+\begin{questions}
+
+\question[2] Lorem ipsum dolor sit amet, consectetur adipiscing elit?
+\begin{solution}
+  Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+\end{solution}
+\vspace{40mm}
+
+\question Consider $f(x) = x^2 + 1$.
+\begin{parts}
+  \part[2] Compute $f'(x)$.
+  \begin{solution}
+    $f'(x) = 2x$.
+  \end{solution}
+  \vspace{30mm}
+  \part[3] Find the minimum of $f$.
+  \begin{solution}
+    $f'(x) = 0 \iff x = 0$, so the minimum is $f(0) = 1$.
+  \end{solution}
+  \vspace{30mm}
+\end{parts}
+
+\question[3] Which of these are correct?
+\begin{checkboxes}
+  \choice Lorem
+  \CorrectChoice Ipsum
+  \choice Dolor
+\end{checkboxes}
+
+\question[5] Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Justify your answer.
+\begin{solution}[50mm]
+  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+\end{solution}
+
+\question[5] Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.
+\vspace{80mm}
+
+\end{questions}
+
+\end{document}
