@@ -302,7 +302,9 @@ def table_styles():
 def body_levels(color='tx1', bucolor='accent1'):
     """Bullet levels of ul/li: accent bullets as in the browser (disc, circle, square), 30/25.5/21 px text,
     line-height 1.35 (~115 % in PowerPoint)."""
-    sizes, chars, busz, mar = (30, 25.5, 21), ('•', '○', '▪'), (100, 80, 100), (34, 74, 110)
+    sizes, chars, busz, mar = (30, 25.5, 21), ('•', '◦', '▪'), (100, 106, 100), (34, 74, 110)
+    # Bullets sit on the text baseline. '◦' (U+25E6) is drawn at the height of '•'; the bigger '○' (U+25CB)
+    # at 80 % sat below the middle of the text. 106 % puts its centre at the height of level 1 (~0.33 em).
     out = ''
     for lvl in range(1, 10):
         k = min(lvl, 3) - 1
