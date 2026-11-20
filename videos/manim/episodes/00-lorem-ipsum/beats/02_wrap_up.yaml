@@ -1,0 +1,22 @@
+# Last section of every video: takeaways and the closing card.
+section: 2
+title: Wrap-up
+subtitle: What to remember
+beats:
+- id: '2.1'
+  title: takeaways
+  refs: []
+  visual: |
+    Slide title "Takeaways": {n_takeaways} numbered takeaways appear one at a time, then pulse
+    together.
+  narration: |
+    To sum up. Lorem ipsum is dolor sit amet. Consectetur adipiscing elit, sed do eiusmod
+    tempor. And the answer, as always, is {answer}.
+- id: '2.2'
+  title: closing
+  refs: []
+  visual: |
+    Navy closing card: long dark DTAK logo, "Thanks for watching", and "Sources and further
+    reading: see REFERENCES.md" in soft blue.
+  narration: |
+    Thanks for watching. All the sources are linked in the description.

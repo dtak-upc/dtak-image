@@ -1,0 +1,35 @@
+# uv workspace: the shared library + one member per episode.
+# `dtak new NN-name` adds new episodes here automatically.
+[project]
+name = "dtak-videos"
+version = "0.1.0"
+description = "DTAK educational videos made with manim"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "lorem",
+    "dtak-manim",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["episodes/00-lorem-ipsum", "packages/dtak-manim"]
+
+[tool.uv.sources]
+lorem = { workspace = true }
+dtak-manim = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+
+[tool.ruff.lint.isort]
+known-first-party = ["dtak_manim", "lorem"]
+known-third-party = ["manim", "manim_voiceover"]

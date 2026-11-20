@@ -1,0 +1,16 @@
+[project]
+name = "lorem"
+version = "0.1.0"
+description = "Template episode: two Lorem Ipsum beats showing the DTAK manim workflow"
+requires-python = ">=3.14"
+dependencies = ["dtak-manim"]
+
+[tool.uv.sources]
+dtak-manim = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lorem"]

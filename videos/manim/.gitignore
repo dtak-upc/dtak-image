@@ -1,0 +1,6 @@
+# rendered videos, voiceover cache, LaTeX cache, timing measurements
+media/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/

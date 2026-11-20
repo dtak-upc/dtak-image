@@ -1,0 +1,34 @@
+# Section 0: the opening of every video. No section card.
+# 0.1 title slide (text from episode.yaml) · 0.2 the question the video answers · 0.3 road map
+section: 0
+title: Intro
+card: false
+beats:
+- id: '0.1'
+  title: title
+  refs: []
+  visual: |
+    Long DTAK logo fades in, centred high. The title is written below it, the subtitle in UPC
+    blue fades in.
+  narration: |
+    Lorem ipsum dolor sit amet. Today we open the box and look at how consectetur adipiscing
+    elit actually works.
+- id: '0.2'
+  title: the question
+  refs: []
+  visual: |
+    Slide title "One input, many questions". Left: the running example in a code block. An arrow
+    leads into a navy box with a soft-blue "?" and another arrow out to a result table. Then
+    {n_questions} questions fade in below, one per part of the video.
+  narration: |
+    Here is our running example: lorem ipsum goes in, and dolor sit amet comes out, almost
+    instantly. But behind that answer there are {n_questions} questions. What *is* lorem? What does
+    ipsum *mean*? And which *algorithm* turns one into the other?
+- id: '0.3'
+  title: road map
+  refs: []
+  visual: |
+    Slide title "Road map": the numbered list of the sections of the video (from the YAML).
+  narration: |
+    We will answer them step by step: first lorem ipsum itself, and then a wrap-up with the
+    key ideas.

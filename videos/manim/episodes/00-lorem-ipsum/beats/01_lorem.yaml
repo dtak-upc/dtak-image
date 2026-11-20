@@ -1,0 +1,31 @@
+# One file per section. This is the source of truth for the storyboard (visual)
+# and the script (narration); STORYBOARD.md and SCRIPT.md are generated from it.
+# {placeholders} are filled from lorem.data.FACTS. refs: entries of REFERENCES.md.
+section: 1
+title: Lorem ipsum
+subtitle: Dolor sit amet, consectetur adipiscing elit
+card: true            # open with a navy section card (false for an intro)
+beats:
+- id: '1.1'
+  title: lorem ipsum
+  refs: [1]
+  visual: |
+    Title "Lorem ipsum dolor sit amet". Left: {n_items} bullets appear one by one. Right: a code
+    block is written, then a small table "lorem" fades in below it and its second row is
+    outlined in UPC blue.
+  narration: |
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+    **reprehenderit** in voluptate velit esse cillum dolore.
+- id: '1.2'
+  title: dolor sit amet
+  refs: [1, 2]
+  visual: |
+    Title "Consectetur adipiscing". A small tree of three nodes grows from the top (root, then two
+    children with edges). A formula is written on the right, and a callout with the number
+    {answer} appears at the bottom.
+  narration: |
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+    anim id est laborum. Curabitur pretium tincidunt lacus, nulla gravida orci a odio. The
+    answer, of course, is {answer}.

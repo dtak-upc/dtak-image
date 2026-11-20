@@ -1,0 +1,16 @@
+# The order of the video: one entry per section (= one scene).
+# Every video has the same frame: 0 intro (title, question, road map) ... content
+# sections ... a last section with takeaways and the closing card.
+slug: 00-lorem-ipsum
+# Title slide: long DTAK logo, title, subtitle; optional "author · institute · date" line
+# (fill author/institute/date to show it; empty fields are skipped).
+title: "Lorem ipsum: a template episode"
+subtitle: "Sit amet, consectetur adipiscing elit"
+author: ""
+institute: ""
+date: ""
+words_per_minute: 140
+scenes:
+  - {beats: beats/00_intro.yaml,   module: lorem.scenes.s00_intro,   scene: Intro}
+  - {beats: beats/01_lorem.yaml,   module: lorem.scenes.s01_lorem,   scene: LoremIpsum}
+  - {beats: beats/02_wrap_up.yaml, module: lorem.scenes.s02_wrap_up, scene: WrapUp}
